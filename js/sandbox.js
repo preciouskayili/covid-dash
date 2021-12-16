@@ -1,9 +1,7 @@
-let spinners = document.getElementById("spin");
-const spins = () => {
-  console.log(spinners);
-};
-spins();
+const loaders = document.getElementsByClassName("spin_loader");
 const markup = document.getElementsByClassName("data");
+const button = document.getElementById("load_btn");
+
 fetch("https://disease.sh/v3/covid-19/all")
   .then((response) => {
     if (!response.ok) {
@@ -12,6 +10,9 @@ fetch("https://disease.sh/v3/covid-19/all")
     return response.json();
   })
   .then((res) => {
+    for (let i = 0; i < loaders.length; i++) {
+      loaders[i].classList.add("d-none");
+    }
     markup[0].innerHTML = `${res.cases.toLocaleString()}`;
     markup[1].innerHTML = `${res.active.toLocaleString()}`;
     markup[2].innerHTML = `${res.recovered.toLocaleString()}`;
@@ -20,13 +21,28 @@ fetch("https://disease.sh/v3/covid-19/all")
     markup[5].innerHTML = `${res.deaths.toLocaleString()}`;
   })
   .catch((err) => {
+    for (let i = 0; i < loaders.length; i++) {
+      loaders[i].classList.add("d-none");
+    }
+    markup[0].innerHTML = `An Error occured`;
+    markup[1].innerHTML = `An Error occured`;
+    markup[2].innerHTML = `An Error occured`;
+    markup[3].innerHTML = `An Error occured`;
+    markup[4].innerHTML = `An Error occured`;
+    markup[5].innerHTML = `An Error occured`;
     console.log(err);
   });
 
 const fetchResult = (country) => {
-  console.log(country);
-  const markup = document.getElementsByClassName("data");
+  button.innerHTML = `
+    <span class="spinner-border spinner-border-sm"></span>
+    Loading
+    `;
+  for (let i = 0; i < loaders.length; i++) {
+    console.log(loaders[i].classList.remove("d-none"));
+  }
   document.getElementById("title").innerHTML = `${country}`;
+
   fetch(`https://disease.sh/v3/covid-19/countries/${country}`)
     .then((response) => {
       if (!response.ok) {
@@ -36,6 +52,11 @@ const fetchResult = (country) => {
       return response.json();
     })
     .then((res) => {
+      for (let i = 0; i < loaders.length; i++) {
+        loaders[i].classList.add("d-none");
+        button.disabled = false;
+        button.innerHTML = "Search";
+      }
       markup[0].innerHTML = `${res.cases.toLocaleString()}`;
       markup[1].innerHTML = `${res.active.toLocaleString()}`;
       markup[2].innerHTML = `${res.recovered.toLocaleString()}`;
@@ -44,6 +65,11 @@ const fetchResult = (country) => {
       markup[5].innerHTML = `${res.deaths.toLocaleString()}`;
     })
     .catch((err) => {
+      for (let i = 0; i < loaders.length; i++) {
+        loaders[i].classList.add("d-none");
+        button.disabled = false;
+        button.innerHTML = "Search";
+      }
       console.log(err);
     });
 };

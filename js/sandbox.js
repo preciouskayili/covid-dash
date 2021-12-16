@@ -34,12 +34,12 @@ fetch("https://disease.sh/v3/covid-19/all")
   });
 
 const fetchResult = (country) => {
-  markup[0].innerHTML = `${res.cases.toLocaleString()}`;
-  markup[1].innerHTML = `${res.active.toLocaleString()}`;
-  markup[2].innerHTML = `${res.recovered.toLocaleString()}`;
-  markup[3].innerHTML = `${res.critical.toLocaleString()}`;
-  markup[4].innerHTML = `${res.tests.toLocaleString()}`;
-  markup[5].innerHTML = `${res.deaths.toLocaleString()}`;
+  markup[0].innerHTML = ``;
+  markup[1].innerHTML = ``;
+  markup[2].innerHTML = ``;
+  markup[3].innerHTML = ``;
+  markup[4].innerHTML = ``;
+  markup[5].innerHTML = ``;
   button.innerHTML = `
     <span class="spinner-border spinner-border-sm"></span>
     Loading
@@ -52,7 +52,7 @@ const fetchResult = (country) => {
   fetch(`https://disease.sh/v3/covid-19/countries/${country}`)
     .then((response) => {
       if (!response.ok) {
-        throw Error("Error fetching results");
+        throw new Error("Error fetching results");
       }
 
       return response.json();
@@ -76,6 +76,11 @@ const fetchResult = (country) => {
         button.disabled = false;
         button.innerHTML = "Search";
       }
-      console.log(err);
+      markup[0].innerHTML = `An Error occured`;
+      markup[1].innerHTML = `An Error occured`;
+      markup[2].innerHTML = `An Error occured`;
+      markup[3].innerHTML = `An Error occured`;
+      markup[4].innerHTML = `An Error occured`;
+      markup[5].innerHTML = `An Error occured`;
     });
 };

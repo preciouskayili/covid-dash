@@ -34,6 +34,12 @@ fetch("https://disease.sh/v3/covid-19/all")
   });
 
 const fetchResult = (country) => {
+  markup[0].innerHTML = `${res.cases.toLocaleString()}`;
+  markup[1].innerHTML = `${res.active.toLocaleString()}`;
+  markup[2].innerHTML = `${res.recovered.toLocaleString()}`;
+  markup[3].innerHTML = `${res.critical.toLocaleString()}`;
+  markup[4].innerHTML = `${res.tests.toLocaleString()}`;
+  markup[5].innerHTML = `${res.deaths.toLocaleString()}`;
   button.innerHTML = `
     <span class="spinner-border spinner-border-sm"></span>
     Loading

@@ -34,7 +34,6 @@ fetch("https://disease.sh/v3/covid-19/all")
 const fetchResult = (country, countryName) => {
   button.innerHTML = `
   <span class="spinner-border spinner-border-sm"></span>
-  Loading
   `;
   for (let i = 0; i < loaders.length; i++) {
     markup[i].innerHTML = ``;

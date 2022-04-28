@@ -50,7 +50,11 @@
         <!-- Collapsible wrapper -->
         <div class="mx-auto">
           <!-- Search form -->
-          <form id="search" class="d-flex input-group mx-auto w-auto">
+          <form
+            id="search"
+            onsubmit="handleSubmit(event)"
+            class="d-flex input-group mx-auto w-auto"
+          >
             <input
               type="search"
               class="form-outline shadow form-control"
@@ -61,9 +65,8 @@
               value="Nigeria"
             />
             <button
-              onclick="handleSubmit(event.target.value)"
               class="btn btn-sm btn-primary load_btn"
-              type="button"
+              type="submit"
               id="load_btn"
               style="border: none"
               data-ripple-color="dark"
@@ -173,12 +176,13 @@
     </div>
 
     <script>
-      const handleSubmit = () => {
+      const handleSubmit = (e) => {
+        e.preventDefault();
         var countryData = $("#country_selector").countrySelect(
           "getSelectedCountryData"
         );
 
-        fetchResult(countryData.name);
+        fetchResult(countryData.iso2, countryData.name);
       };
 
       $("#country_selector").countrySelect({
@@ -202,7 +206,7 @@
           let country = map.getRegionName(code);
 
           $("#country_selector").countrySelect("setCountry", `${country}`);
-          fetchResult(country);
+          fetchResult(country, country);
         },
       });
     </script>
